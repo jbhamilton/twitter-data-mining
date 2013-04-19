@@ -114,26 +114,33 @@ var viewControl = {
 
     },//storeData
 
-    //method for changing the date range of data that is being viewed
-    changeDate : function(){
+    //change the context of the view
+    changeContext : function(){
         $('.doAddContext').live('click',function(){
+
+            //clear all context
+            if($(this).attr('remove')=="1"){
+                $('input[name=startDate]').val('');
+                viewControl.startDate = undefined;
+                $('input[name=endDate]').val('');
+                viewControl.endDate = undefined;
+                $('#sTime').val('');
+                viewControl.startTime = undefined;
+                $('#eTime').val('');
+                viewControl.endTime = undefined;
+                tags.addTagList.tags=[];
+            }//if
             
             if($('input[name=startDate]').val()!=''){  
                 var startDate =  parseInt($('#startDate').val().toString().substr(0,10));
                 //subtract 14400 or 4 hours to start from midnight
                 viewControl.startDate = startDate - 14400;
             }//if
-            else{
-                viewControl.startDate = undefined;
-            }//else
             if($('input[name=endDate]').val()!=''){  
                 //add 72000 - 1 to get 23:59 of that date aka end of the day
                 var endDate = parseInt($('#endDate').val().toString().substr(0,10))
                 viewControl.endDate = endDate + 71999;
             }//if
-            else{
-                viewControl.endDate = undefined;
-            }//else
             if($('#sTime').val() != ''){
                 var sTime = $('#sTime').val();
                 var length = sTime.length;
@@ -145,9 +152,6 @@ var viewControl = {
                 }//if
                 viewControl.startTime = time;
             }//if
-            else{
-                viewControl.startTime = undefined;
-            }//else
             if($('#eTime').val() != ''){
                 var eTime = $('#eTime').val();
                 var length = eTime.length;
@@ -159,9 +163,6 @@ var viewControl = {
                 }//if
                 viewControl.endTime = time;
             }//if
-            else{
-                viewControl.endTime = undefined;
-            }//else
 
             if(viewControl.viewing == 'conLinks' || viewControl.viewing == 'conTweets' || viewControl.viewing == 'conUsers'){
                 $('#gut').children('div').eq(1).remove()
@@ -194,13 +195,13 @@ var viewControl = {
             $('.addedContext').remove();
             $('#tagsvg').remove();
             if(viewControl.startTime===undefined && viewControl.endTime===undefined && viewControl.startDate===undefined && viewControl.endDate===undefined){
-                $('#dateRange').remove();
+                $('#dateRange').empty();
             }//if
 
             TF.request();
             viewControl.storeData();
         });//live
-    }(),//changeDate
+    }(),//changeContext
 
     prepareQuery : function(q){
 
@@ -419,6 +420,7 @@ var viewControl = {
         $('#closePopUp').live('click',function(){
             $('#loading').hide();
             $('#loading').empty();
+            $('#loading').append('<img src="images/loading.gif" alt="loading"/>');
             $('#shades').hide();
         });
     }()//closePopUpListener
