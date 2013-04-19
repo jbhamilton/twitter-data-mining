@@ -196,7 +196,6 @@ var viewControl = {
             if(viewControl.startTime===undefined && viewControl.endTime===undefined && viewControl.startDate===undefined && viewControl.endDate===undefined){
                 $('#dateRange').remove();
             }//if
-            
 
             TF.request();
             viewControl.storeData();
@@ -284,7 +283,6 @@ var viewControl = {
         if(timeRange != ''){
             $('#timeRange').html(timeRange);
         }
-
 
         if(this.active == "All"){
             //add togethor the sum of both anon + ows
@@ -473,8 +471,6 @@ var tags = {
         $(that).attr('class','selected');
         //set the new view
         viewControl.setView();
-
-
     },//setUp
 
     //this method is called from TF.setUp
@@ -1663,18 +1659,6 @@ String.prototype.parseHashtag = function() {
         return t.replace(t,"<span class='singleTagInfo'>"+t+"<div class='popup BG'></div></span>")
     });
 };
-
-$(document).ready(function(){
-    $('#sTime').ptTimeSelect({timeFormat:'hhmm'});
-    $('#eTime').ptTimeSelect({timeFormat:'hhmm'});
-//    TF.request();
-
-    $("#loading").bind("ajaxSend", function(){
-        $(this).show();
-    }).bind("ajaxComplete", function(){
-        $(this).hide();
-    });
-})
 
 //function to listen for jquery datepicker plugin
 $(function() {
